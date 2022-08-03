@@ -1,6 +1,7 @@
 /*
 * Chapter 03
 */
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
 // 1 bit  = 0 or 1 = 2개
@@ -122,6 +123,23 @@ int main(void)
 	printf("double : %d\n", sizeof(double));
 	printf("long double : %d\n", sizeof(long double));
 	printf("\n");
+
+
+	/*
+	// ** 입력
+	int Number;// = 0;
+
+	printf_s("입력 : ");
+	scanf_s("%d", &Number);
+
+	printf_s("입력받은 값 : %d", Number);
+	*/
+
+	
+
+
+
+
 
 	return 0;
 }
