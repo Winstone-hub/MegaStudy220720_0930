@@ -118,7 +118,56 @@ int main(void)
 			printf("%02d ", Number[i][j]);
 		printf("\n");
 	}
+	printf("\n");
 		
+
+
+	// ** 질문1
+	{
+		/*
+		{
+			char Array[80];
+
+			printf("이름 입력 : ");
+			scanf("%s", Array);
+			printf("출력 : %s\n\n", Array);
+		}
+		*/
+
+		{
+			char Array[80];
+
+			printf("이름 입력 : ");
+			//scanf_s("%s", &Array[4], sizeof(Array) - 4);
+			scanf("%s", &Array[4]);
+
+			Array[0] = ' ';
+			Array[1] = ' ';
+			Array[2] = ' ';
+			Array[3] = ' ';
+
+			//printf_s("이름 입력 : %s", Array);
+			printf_s("이름 입력 : %c%c", Array[4], Array[5]);
+		}
+		
+		/*
+		{
+			char* Array = (char*)"●●●●●●●●●●";
+			//char Array[] = "123456789012345678901234567890";
+
+			//printf("%s", Array);
+			
+			//for (int i = 0; i < strlen(Array) + 1 ; i += 2)
+				//printf("%c%c", Array[i], Array[i+1]);
+			
+
+			for (int i = 4; i < strlen(Array) - 5; i += 2)
+				printf("%c%c", Array[i], Array[i+1]);
+		}
+		*/
+	}
+
+
 
 
 	return 0;
