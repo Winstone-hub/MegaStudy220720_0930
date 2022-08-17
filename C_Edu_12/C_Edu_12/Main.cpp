@@ -63,6 +63,7 @@ int main(void)
 		// 형태가 바뀔때 발생할 수 있는 문제
 		printf("%f\n", *f);
 	}
+
 	return 0;
 }
 
