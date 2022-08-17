@@ -19,6 +19,7 @@ int main(void)
 
 
 	// 451 예제
+	/*
 	{
 		int* pi;
 		double* pd;
@@ -42,12 +43,15 @@ int main(void)
 		free(pi);
 		free(pd);
 	}
+	*/
 
-
+	/*
 	{
 		printf("(void*) size : %d\n", sizeof(void*));
 	}
+	*/
 
+	/*
 	{
 		// ** (void*) 의 사용
 		int Array[5] = {10, 20, 30, 40, 50};
@@ -62,6 +66,25 @@ int main(void)
 
 		// 형태가 바뀔때 발생할 수 있는 문제
 		printf("%f\n", *f);
+	}
+	*/
+
+	//==============================================
+
+	// ** int* pi = (int*)malloc(메모리를 할당할 크기);
+	// ** int* pi = (int*)malloc(sizeof(int));
+	// ** int* pi = (int*)malloc(4); 숫자를 사용해도 됨.
+
+	{
+		const int MAX = 8;
+
+		int* Array = (int*)malloc(sizeof(int) * MAX);
+
+		for (int i = 0; i < MAX; ++i)
+			Array[i] = (10 * i + 10);
+
+		for (int i = 0; i < MAX; ++i)
+			printf("%d\n", Array[i]);
 	}
 
 	return 0;
