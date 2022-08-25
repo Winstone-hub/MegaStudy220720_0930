@@ -6,8 +6,16 @@ struct Vector2
 	int x, y;
 };
 
+// ** true/false 둘중에 하나만 반환.
+// ** 키 입력이 횡 이동일때를 확인.
+bool Horzontal = false;
+
+// ** 키 입력이 종 이동일때를 확인.
+bool Vertical = false;
+
 void SetCursorPosition(int _x, int _y);
 void ShowCursor(bool _b);
+void InputKey(Vector2* _Position, char* _Texture);
 
 int main(void)
 {
@@ -25,13 +33,6 @@ int main(void)
 	// ** 플레이어 Texture
 	char* Texture = (char*)"△";
 
-	// ** true/false 둘중에 하나만 반환.
-	// ** 키 입력이 횡 이동일때를 확인.
-	bool Horzontal = false;
-
-	// ** 키 입력이 종 이동일때를 확인.
-	bool Vertical = false;
-
 	// ** 루프
 	while (true)
 	{
@@ -43,71 +44,7 @@ int main(void)
 			// ** 화면 클리어
 			system("cls");
 
-			// ** 키 입력.
-			// GetAsyncKeyState() = 키입력 함수
-			
-			// 상황에 따라서 다음을 반환 함.
-			// 0x0000, 0x0001, 0x8000, 0x8001
-			
-			// ** 뒤쪽 0과 1의 차의
-			// 0 : 이전에 눌린적 없음.
-			// 1 : 이전에 눌린적 있음.
-			
-			// ** 앞쪽 8과 0의 차의
-			// 0 : 현재 눌리지 않음.
-			// 8 : 현재 눌림.
-			
-			// ** 매개변수로 Virtual Key 를 입력 받는다.
-			//if (GetAsyncKeyState(VK_UP) & 0x01)
-				//printf("UP\n");
-
-			if (GetAsyncKeyState(VK_UP) && !Horzontal)
-			{
-				// ** y좌표가 0보다 클 때에만 입력을 받는다.
-				if (PlayerPosition.y > 0)
-					PlayerPosition.y--;
-
-				Texture = (char*)"△";
-				Vertical = true;
-			}
-			else
-				Vertical = false;
-				
-			if (GetAsyncKeyState(VK_DOWN) && !Horzontal)
-			{
-				// ** y좌표가 39보다 작을때에만 입력을 받는다.
-				if(PlayerPosition.y < 39)
-					PlayerPosition.y++;
-
-				Texture = (char*)"▽";
-				Vertical = true;
-			}
-			else
-				Vertical = false;
-
-			if (GetAsyncKeyState(VK_LEFT) && !Vertical)
-			{
-				// ** x좌표가 0보다 클 때에만 입력을 받는다.
-				if (PlayerPosition.x > 0)
-					PlayerPosition.x--;
-
-				Texture = (char*)"◁";
-				Horzontal = true;
-			}
-			else
-				Horzontal = false;
-
-			if (GetAsyncKeyState(VK_RIGHT) && !Vertical)
-			{
-				// ** x좌표가 118보다 작을 때에만 입력을 받는다.
-				if (PlayerPosition.x < 118)
-					PlayerPosition.x++;
-
-				Texture = (char*)"▷";
-				Horzontal = true;
-			}
-			else
-				Horzontal = false;
+			InputKey(&PlayerPosition, Texture);
 
 			SetCursorPosition(
 				PlayerPosition.x, 
@@ -151,4 +88,74 @@ void ShowCursor(bool _b)
 	// ** 커서의 설정을 적용시키는 함수.
 	SetConsoleCursorInfo(
 		GetStdHandle(STD_OUTPUT_HANDLE), &Info);
+}
+
+// ** 플레이어의 키 입력을 받고, 입력에 따라 Texture 를 변경 한다.
+void InputKey(Vector2* _Position, char* _Texture)
+{
+	// ** 키 입력.
+	// GetAsyncKeyState() = 키입력 함수
+
+	// 상황에 따라서 다음을 반환 함.
+	// 0x0000, 0x0001, 0x8000, 0x8001
+
+	// ** 뒤쪽 0과 1의 차의
+	// 0 : 이전에 눌린적 없음.
+	// 1 : 이전에 눌린적 있음.
+
+	// ** 앞쪽 8과 0의 차의
+	// 0 : 현재 눌리지 않음.
+	// 8 : 현재 눌림.
+
+	// ** 매개변수로 Virtual Key 를 입력 받는다.
+	//if (GetAsyncKeyState(VK_UP) & 0x01)
+		//printf("UP\n");
+
+	if (GetAsyncKeyState(VK_UP) && !Horzontal)
+	{
+		// ** y좌표가 0보다 클 때에만 입력을 받는다.
+		if (_Position->y > 0)
+			_Position->y--;
+
+		_Texture = (char*)"△";
+		Vertical = true;
+	}
+	else
+		Vertical = false;
+
+	if (GetAsyncKeyState(VK_DOWN) && !Horzontal)
+	{
+		// ** y좌표가 39보다 작을때에만 입력을 받는다.
+		if (_Position->y < 39)
+			_Position->y++;
+
+		_Texture = (char*)"▽";
+		Vertical = true;
+	}
+	else
+		Vertical = false;
+
+	if (GetAsyncKeyState(VK_LEFT) && !Vertical)
+	{
+		// ** x좌표가 0보다 클 때에만 입력을 받는다.
+		if (_Position->x > 0)
+			_Position->x--;
+
+		_Texture = (char*)"◁";
+		Horzontal = true;
+	}
+	else
+		Horzontal = false;
+
+	if (GetAsyncKeyState(VK_RIGHT) && !Vertical)
+	{
+		// ** x좌표가 118보다 작을 때에만 입력을 받는다.
+		if (_Position->x < 118)
+			_Position->x++;
+
+		_Texture = (char*)"▷";
+		Horzontal = true;
+	}
+	else
+		Horzontal = false;
 }
