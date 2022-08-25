@@ -42,8 +42,8 @@ int main(void)
 
 			// ** 시간을 출력
 			printf("%02d:%02d:%02d\n", 
-				tTime.Hour, 
-				tTime.Minute, 
+				tTime.Hour,
+				tTime.Minute,
 				++tTime.Second);
 
 			// ** 초침이 60이 되면 초침은 다시 0으로 만들고 분침 1증가 
