@@ -2,6 +2,13 @@
 #include <Windows.h>
 
 
+// ** 충돌처리.
+// ** 생성자 & 복사생성자.
+// ** 장면 관리 (scene 전환)
+// ** 생성 함수.
+// ** 함수 정리.
+
+
 struct Vector2
 {
 	int x, y;
@@ -10,6 +17,7 @@ struct Vector2
 struct Object
 {
 	Vector2 Position;
+	Vector2 Scale;
 	char* Texture;
 };
 
@@ -31,21 +39,13 @@ int main(void)
 	Player.Position.x = 0;
 	Player.Position.y = 0;
 
+	Player.Scale.x = 2;
+	Player.Scale.y = 1;
+
 	Player.Texture = (char*)"△";
 
 
-
-
-	// 00110100
-	
-	// 00000001
-	// 00000010
-	// 00000100
-	// 00001000
-	// 00010000
-	// 00100000
-	// 01000000
-
+	// ** 여분의 총알을 준비해둔다.
 	Object Bullet[128];
 
 	// ** 총알이 발사 되었는지 확인하는 용도.
@@ -58,12 +58,17 @@ int main(void)
 	{
 		// ** srand = 랜덤함수 초기화
 		srand(
+			// ** 현재 시간을 제곱하여 알 수 없는 값으로 초기화.
 			GetTickCount64() * GetTickCount64());
 
 		// ** rand() = 랜덤 함수.
 		// ** rand() % 40 = 0 ~ 39 사이의 랜덤값.
 		Bullet[i].Position.x = 118;
 		Bullet[i].Position.y = rand() % 40;
+
+		Bullet[i].Scale.x = 1;
+		Bullet[i].Scale.y = 1;
+
 		Bullet[i].Texture = (char*)"*";
 
 		ShowBullet[i] = false;
@@ -126,12 +131,32 @@ int main(void)
 				// ** 총알이 활성화 상태라면...
 				if (ShowBullet[i])
 				{
+					// ** 총알의 이동. 
+					// ** 이동방향 :  ←←←
 					Bullet[i].Position.x--;
 
+					// ** 충돌판정.
+					if (Bullet[i].Position.x <= 0)
+					{
+						ShowBullet[i] = false;
+						continue;
+					}
+
+					// ** 크기값을 함께 설정해서 범위 충돌 만들어야 함.
+					if (Bullet[i].Position.x == Player.Position.x &&
+						Bullet[i].Position.y == Player.Position.y)
+					{
+						ShowBullet[i] = false;
+						continue;
+					}
+
+
+					// ** 총알이 제 위치에 그려질수 있도록 커서를 이동시킨다.
 					SetCursorPosition(
 						Bullet[i].Position.x,
 						Bullet[i].Position.y);
 
+					// ** 총알을 그린다.
 					printf("%s", Bullet[i].Texture);
 				}
 			}
