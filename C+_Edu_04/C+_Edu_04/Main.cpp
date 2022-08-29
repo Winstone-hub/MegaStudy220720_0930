@@ -8,6 +8,11 @@
 
 // ** 충돌처리.
 // ** 생성자 & 복사생성자.
+
+
+
+
+
 // ** 장면 관리 (scene 전환)
 // ** 생성 함수.
 // ** 함수 정리.
@@ -19,6 +24,18 @@
 struct Vector2
 {
 	int x, y;
+
+	Vector2() : x(0), y(0)
+	{
+		printf("생성자\n");
+		system("pause");
+	}
+
+	Vector2(int _x, int _y) : x(_x), y(_y)
+	{
+		printf("복사 생성자\n");
+		system("pause");
+	}
 };
 
 struct Object
@@ -43,26 +60,29 @@ int main(void)
 
 	// ** 플레이어 초기화
 	Object Player;
-	Player.Position.x = int(120 * 0.3333f);
-	Player.Position.y = 40>>1;
-
+	Player.Position = Vector2(int(120 * 0.3333f), 40 >> 1);
 	Player.Texture = (char*)"△";
+	Player.Scale = Vector2((int)strlen(Player.Texture), 1);
+
+	//Player.Position.x = int(120 * 0.3333f);
+	//Player.Position.y = 40>>1;
 
 	// ** Texture 길이를 미리 확인할 수 없다. 
 	// ** Texture 를 먼저 초기화 하고 이후에 사이즈를 아래와 같이 초기화 한다.
-	Player.Scale.x = (int)strlen(Player.Texture);
-	Player.Scale.y = 1;
+	//Player.Scale.x = (int)strlen(Player.Texture);
+	//Player.Scale.y = 1;
 
-
-	// ** 플레이어 초기화
+	// ** Enemy 초기화
 	Object Enemy;
-	Enemy.Position.x = int(120 * 0.3333f * 2);
-	Enemy.Position.y = 40>>1;
-
+	Enemy.Position = Vector2(int(120 * 0.3333f * 2), 40 >> 1);
 	Enemy.Texture = (char*)"■";
+	Enemy.Scale = Vector2((int)strlen(Enemy.Texture), 1);
+	
+	//Enemy.Position.x = int(120 * 0.3333f * 2);
+	//Enemy.Position.y = 40>>1;
 
-	Enemy.Scale.x = 2;
-	Enemy.Scale.y = 1;
+	//Enemy.Scale.x = (int)strlen(Enemy.Texture);
+	//Enemy.Scale.y = 1;
 
 
 	while (true)
