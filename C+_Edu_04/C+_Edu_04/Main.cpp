@@ -1,11 +1,20 @@
 #include <stdio.h>
 #include <Windows.h>
 
+// ** const
+
+// ** 상수화 
+//const int NUMBER = 10;
+
 // ** 충돌처리.
 // ** 생성자 & 복사생성자.
 // ** 장면 관리 (scene 전환)
 // ** 생성 함수.
 // ** 함수 정리.
+
+
+
+
 
 struct Vector2
 {
@@ -32,45 +41,29 @@ int main(void)
 
 	ULONGLONG Time = GetTickCount64();
 
-	// ** 플레피어 초기화
+	// ** 플레이어 초기화
 	Object Player;
-	Player.Position.x = 0;
-	Player.Position.y = 0;
-
-	Player.Scale.x = 2;
-	Player.Scale.y = 1;
+	Player.Position.x = int(120 * 0.3333f);
+	Player.Position.y = 40>>1;
 
 	Player.Texture = (char*)"△";
 
+	// ** Texture 길이를 미리 확인할 수 없다. 
+	// ** Texture 를 먼저 초기화 하고 이후에 사이즈를 아래와 같이 초기화 한다.
+	Player.Scale.x = (int)strlen(Player.Texture);
+	Player.Scale.y = 1;
 
-	// ** 여분의 총알을 준비해둔다.
-	Object Bullet[128];
 
-	// ** 총알이 발사 되었는지 확인하는 용도.
-	bool ShowBullet[128];
+	// ** 플레이어 초기화
+	Object Enemy;
+	Enemy.Position.x = int(120 * 0.3333f * 2);
+	Enemy.Position.y = 40>>1;
 
-	// ** 총알의 생성간의 간격을 주기 위함.
-	ULONGLONG BulletDelay = GetTickCount64();
+	Enemy.Texture = (char*)"■";
 
-	for (int i = 0; i < 128; i++)
-	{
-		// ** srand = 랜덤함수 초기화
-		srand(
-			// ** 현재 시간을 제곱하여 알 수 없는 값으로 초기화.
-			GetTickCount64() * GetTickCount64());
+	Enemy.Scale.x = 2;
+	Enemy.Scale.y = 1;
 
-		// ** rand() = 랜덤 함수.
-		// ** rand() % 40 = 0 ~ 39 사이의 랜덤값.
-		Bullet[i].Position.x = 118;
-		Bullet[i].Position.y = rand() % 40;
-
-		Bullet[i].Scale.x = 1;
-		Bullet[i].Scale.y = 1;
-
-		Bullet[i].Texture = (char*)"*";
-
-		ShowBullet[i] = false;
-	}
 
 	while (true)
 	{
@@ -80,13 +73,33 @@ int main(void)
 
 			system("cls");
 
+			// **  ===== Progress ===== 
 			InputKey(&Player);
 
+
+			// ** ===== Render ===== 
+
+			// ** Player
 			SetCursorPosition(
 				Player.Position.x,
 				Player.Position.y);
 
 			printf("%s", Player.Texture);
+
+			// ** Enemy
+			SetCursorPosition(
+				Enemy.Position.x,
+				Enemy.Position.y);
+			printf("%s", Enemy.Texture);
+
+			// ** 충돌
+			if (Player.Position.x + 2 > Enemy.Position.x &&
+				Enemy.Position.x + 2 > Player.Position.x &&
+				Player.Position.y == Enemy.Position.y)
+			{
+				SetCursorPosition(120>>1, 1);
+				printf("충돌 입니다.");
+			}
 		}
 	}
 
