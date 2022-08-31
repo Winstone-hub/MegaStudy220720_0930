@@ -3,9 +3,12 @@
 // ** 함수 정리.
 // ** 키 입력 함수 수정.
 
+
+
 // ** 장면전환을 하기위한 변수
 // ** 현재 장면을 보관한다.
 SceneID SceneState = SceneID::LOGO;
+DWORD KeyState = 0;
 
 
 void SetScene(Object* _pPlayer, Object* _pEnemy);
@@ -20,11 +23,10 @@ void LogoRender(char* _str, int _x, int _y);
 void MenuProgress();
 void MenuRender(char* _str, int _x, int _y);
 
+void StageInitialize();
 void StageProgress(Object* _Player, Object* _Enemy);
 void StageRender(Object* _Player, Object* _Enemy);
 bool Collision(Object* _Temp, Object* _Dest);
-
-
 
 
 
@@ -64,32 +66,17 @@ void SetScene(Object* _pPlayer, Object* _pEnemy)
 		LogoProgress();
 		LogoRender((char*)"Logo", 58, 20);
 		break;
+
 	case SceneID::MENU:
 		MenuProgress();
 		MenuRender((char*)"MENU", 58, 20);
-
-		
 		break;
+
 	case SceneID::STAGE:
-		// ** ===== Progress ===== 
-		InputKey(_pPlayer);
-
-		// ** =====  Render  ===== 
-		// ** Player
-		Render(_pPlayer->Texture,
-			_pPlayer->Position.x,
-			_pPlayer->Position.y);
-
-		// ** Enemy
-		Render(_pEnemy->Texture,
-			_pEnemy->Position.x,
-			_pEnemy->Position.y);
-
-		
-
-		if (GetAsyncKeyState('Q'))
-			SceneState = SceneID::EXIT;
+		StageProgress(_pPlayer, _pEnemy);
+		StageRender(_pPlayer, _pEnemy);
 		break;
+
 	case SceneID::EXIT:
 		exit(NULL);
 		break;
@@ -155,52 +142,39 @@ void ShowCursor(bool _b)
 // ** 플레이어의 키 입력을 받고, 입력에 따라 Texture 를 변경 한다.
 void InputKey(Object* _Object)
 {
-	bool Horzontal = false;
-	bool Vertical = false;
+	KeyState = 0;
 
-	if (GetAsyncKeyState(VK_UP) && !Horzontal)
+	if (GetAsyncKeyState(VK_UP))
 	{
 		if (_Object->Position.y > 0)
 			_Object->Position.y--;
 
 		_Object->Texture = (char*)"△";
-		Vertical = true;
 	}
-	else
-		Vertical = false;
 
-	if (GetAsyncKeyState(VK_DOWN) && !Horzontal)
+	if (GetAsyncKeyState(VK_DOWN))
 	{
 		if (_Object->Position.y < 39)
 			_Object->Position.y++;
 
 		_Object->Texture = (char*)"▽";
-		Vertical = true;
 	}
-	else
-		Vertical = false;
 
-	if (GetAsyncKeyState(VK_LEFT) && !Vertical)
+	if (GetAsyncKeyState(VK_LEFT))
 	{
 		if (_Object->Position.x > 0)
 			_Object->Position.x--;
 
 		_Object->Texture = (char*)"◁";
-		Horzontal = true;
 	}
-	else
-		Horzontal = false;
 
-	if (GetAsyncKeyState(VK_RIGHT) && !Vertical)
+	if (GetAsyncKeyState(VK_RIGHT))
 	{
 		if (_Object->Position.x < 118)
 			_Object->Position.x++;
 
 		_Object->Texture = (char*)"▷";
-		Horzontal = true;
 	}
-	else
-		Horzontal = false;
 }
 
 
@@ -221,7 +195,10 @@ void LogoRender(char* _str, int _x, int _y)
 void MenuProgress()
 {
 	if (GetAsyncKeyState('S'))
+	{
+		StageInitialize();
 		SceneState = SceneID::STAGE;
+	}
 }
 
 void MenuRender(char* _str, int _x, int _y)
@@ -230,20 +207,77 @@ void MenuRender(char* _str, int _x, int _y)
 	printf("%s", _str);
 }
 
+Object* Bullet[128];
+bool Check[128];
+
+void StageInitialize()
+{
+	for (int i = 0; i < 128; ++i)
+	{
+		Bullet[i] = CreateObject(0, 0, (char*)"*");
+		Check[i] = false;
+	}
+}
 
 void StageProgress(Object* _Player, Object* _Enemy)
 {
+	InputKey(_Player);
+
+	if (GetAsyncKeyState(VK_SPACE))
+	{
+		for (int i = 0; i < 128; ++i)
+		{
+			if (!Check[i])
+			{
+				Bullet[i]->Position.x = 118;
+				Bullet[i]->Position.y = rand() % 40;
+				Check[i] = true;
+				break;
+			}
+		}
+	}
+
+
+	for (int i = 0; i < 128; ++i)
+	{
+		if (Check[i])
+		{
+			Bullet[i]->Position.x -= 1;
+
+			if (Collision(_Player, Bullet[i]))
+			{
+				SetCursorPosition(120 >> 1, 1);
+				printf("Bullet 충돌 입니다.");
+			}
+		}
+
+		if (Bullet[i]->Position.x <= 1)
+			Check[i] = false;
+	}
+
 	if (Collision(_Player, _Enemy))
 	{
 		SetCursorPosition(120 >> 1, 1);
 		printf("충돌 입니다.");
 	}
+
+	if (GetAsyncKeyState('Q'))
+		SceneState = SceneID::EXIT;
 }
 
 void StageRender(Object* _Player, Object* _Enemy)
 {
 	SetCursorPosition(_Player->Position.x, _Player->Position.y);
 	printf("%s", _Player->Texture);
+
+	for (int i = 0; i < 128; ++i)
+	{
+		if (Check[i])
+		{
+			SetCursorPosition(Bullet[i]->Position.x, Bullet[i]->Position.y);
+			printf("%s", Bullet[i]->Texture);
+		}
+	}
 
 	SetCursorPosition(_Enemy->Position.x, _Enemy->Position.y);
 	printf("%s", _Enemy->Texture);
