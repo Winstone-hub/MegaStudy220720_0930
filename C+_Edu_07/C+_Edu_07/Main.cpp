@@ -10,7 +10,7 @@
 // ** 장면전환을 하기위한 변수
 // ** 현재 장면을 보관한다.
 SceneID SceneState = SceneID::LOGO;
-DWORD KeyState = 0;
+static DWORD KeyState = 0;
 
 
 
@@ -22,13 +22,13 @@ void SetScene(Object* _pPlayer, Object* _pEnemy);
 Object* CreateObject(int _x, int _y, char* _Texture);
 void SetCursorPosition(int _x, int _y);
 void ShowCursor(bool _b);
-void InputKey(Object* _Object);
+void InputKey();
 
 void LogoProgress();
 void LogoRender(char* _str[], int _size, int _x, int _y);
 
 void MenuProgress();
-void MenuRender(char* _str, int _x, int _y);
+void MenuRender(char* _str[], int _size, int _x, int _y);
 
 void StageInitialize();
 void StageProgress(Object* _Player, Object* _Enemy);
@@ -58,17 +58,7 @@ int main(void)
 
 			system("cls");
 
-
-			if (GetAsyncKeyState('A'))
-				SceneState = SceneID::LOGO;
-
-			if (GetAsyncKeyState('S'))
-				SceneState = SceneID::MENU;
-
-			if (GetAsyncKeyState('D'))
-				SceneState = SceneID::STAGE;
-
-
+			InputKey();
 			SetScene(pPlayer, Enemy);
 		}
 	}
@@ -118,13 +108,33 @@ void SetScene(Object* _pPlayer, Object* _pEnemy)
 		};
 
 		LogoProgress();
-		LogoRender(LogoTex, 23, 20, 5);
+		LogoRender(LogoTex, 23, 22, 5);
 	}
 		break;
 
 	case SceneID::MENU:
+	{
+		static char* MenuTex[16] = {
+		(char*)"MMMMMMMM               MMMMMMMM",
+			(char*)"M:::::::M             M:::::::M",
+			(char*)"M::::::::M           M::::::::M",
+			(char*)"M:::::::::M         M:::::::::M",
+			(char*)"M::::::::::M       M::::::::::M    eeeeeeeeeeee    nnnn  nnnnnnnn    uuuuuu    uuuuuu",
+			(char*)"M:::::::::::M     M:::::::::::M  ee::::::::::::ee  n:::nn::::::::nn  u::::u    u::::u",
+			(char*)"M:::::::M::::M   M::::M:::::::M e::::::eeeee:::::een::::::::::::::nn u::::u    u::::u",
+			(char*)"M::::::M M::::M M::::M M::::::Me::::::e     e:::::enn:::::::::::::::nu::::u    u::::u",
+			(char*)"M::::::M  M::::M::::M  M::::::Me:::::::eeeee::::::e  n:::::nnnn:::::nu::::u    u::::u",
+			(char*)"M::::::M   M:::::::M   M::::::Me:::::::::::::::::e   n::::n    n::::nu::::u    u::::u",
+			(char*)"M::::::M    M:::::M    M::::::Me::::::eeeeeeeeeee    n::::n    n::::nu::::u    u::::u",
+			(char*)"M::::::M     MMMMM     M::::::Me:::::::e             n::::n    n::::nu:::::uuuu:::::u",
+			(char*)"M::::::M               M::::::Me::::::::e            n::::n    n::::nu:::::::::::::::uu",
+			(char*)"M::::::M               M::::::M e::::::::eeeeeeee    n::::n    n::::n u:::::::::::::::u",
+			(char*)"M::::::M               M::::::M  ee:::::::::::::e    n::::n    n::::n  uu::::::::uu:::u",
+			(char*)"MMMMMMMM               MMMMMMMM    eeeeeeeeeeeeee    nnnnnn    nnnnnn    uuuuuuuu  uuuu" };
+
 		MenuProgress();
-		MenuRender((char*)"MENU", 58, 20);
+		MenuRender(MenuTex, 16, 17, 8);
+	}
 		break;
 
 	case SceneID::STAGE:
@@ -198,48 +208,35 @@ void ShowCursor(bool _b)
 }
 
 // ** 플레이어의 키 입력을 받고, 입력에 따라 Texture 를 변경 한다.
-void InputKey(Object* _Object)
+void InputKey()
 {
 	KeyState = 0;
 
 	if (GetAsyncKeyState(VK_UP))
-	{
-		if (_Object->Position.y > 0)
-			_Object->Position.y--;
-
-		_Object->Texture = (char*)"△";
-	}
+		KeyState = KEYID_UP;
 
 	if (GetAsyncKeyState(VK_DOWN))
-	{
-		if (_Object->Position.y < 39)
-			_Object->Position.y++;
-
-		_Object->Texture = (char*)"▽";
-	}
+		KeyState = KEYID_DOWN;
 
 	if (GetAsyncKeyState(VK_LEFT))
-	{
-		if (_Object->Position.x > 0)
-			_Object->Position.x--;
-
-		_Object->Texture = (char*)"◁";
-	}
+		KeyState = KEYID_LEFT;
 
 	if (GetAsyncKeyState(VK_RIGHT))
-	{
-		if (_Object->Position.x < 118)
-			_Object->Position.x++;
+		KeyState = KEYID_RIGHT;
 
-		_Object->Texture = (char*)"▷";
-	}
+	if (GetAsyncKeyState(VK_RETURN))
+		KeyState = KEYID_ESCAPE;
+
+	if (GetAsyncKeyState(VK_ESCAPE))
+		KeyState = KEYID_ENTER;
+
+	if (GetAsyncKeyState(VK_SPACE))
+		KeyState = KEYID_SPACE;
 }
-
-
 
 void LogoProgress()
 {
-	if (GetAsyncKeyState(VK_RETURN) || GetAsyncKeyState(VK_ESCAPE))
+	if (KeyState == KEYID_ESCAPE)
 		SceneState = SceneID::MENU;
 }
 
@@ -257,16 +254,19 @@ void LogoRender(char* _str[], int _size, int _x, int _y)
 
 void MenuProgress()
 {
-	/*if (GetAsyncKeyState('S'))
+	if (KeyState == KEYID_ENTER)
 	{
 		SceneState = SceneID::STAGE;
-	}*/
+	}
 }
 
-void MenuRender(char* _str, int _x, int _y)
+void MenuRender(char* _str[], int _size, int _x, int _y)
 {
-	SetCursorPosition(_x, _y);
-	printf("%s", _str);
+	for (int i = 0; i < _size; ++i)
+	{
+		SetCursorPosition(_x, _y + i);
+		printf("%s", _str[i]);
+	}
 }
 
 Object* Bullet[128];
@@ -283,9 +283,39 @@ void StageInitialize()
 
 void StageProgress(Object* _Player, Object* _Enemy)
 {
-	InputKey(_Player);
+	if (KeyState == KEYID_UP)
+	{
+		if (_Player->Position.y > 0)
+			_Player->Position.y--;
 
-	if (GetAsyncKeyState(VK_SPACE))
+		_Player->Texture = (char*)"△";
+	}
+
+	if (KeyState == KEYID_DOWN)
+	{
+		if (_Player->Position.y < 39)
+			_Player->Position.y++;
+
+		_Player->Texture = (char*)"▽";
+	}
+
+	if (KeyState == KEYID_LEFT)
+	{
+		if (_Player->Position.x > 0)
+			_Player->Position.x--;
+
+		_Player->Texture = (char*)"◁";
+	}
+
+	if (KeyState == KEYID_RIGHT)
+	{
+		if (_Player->Position.x < 118)
+			_Player->Position.x++;
+
+		_Player->Texture = (char*)"▷";
+	}
+
+	if (KeyState == KEYID_SPACE)
 	{
 		for (int i = 0; i < 128; ++i)
 		{
@@ -298,7 +328,6 @@ void StageProgress(Object* _Player, Object* _Enemy)
 			}
 		}
 	}
-
 
 	for (int i = 0; i < 128; ++i)
 	{

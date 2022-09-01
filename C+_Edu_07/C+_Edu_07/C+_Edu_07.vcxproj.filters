@@ -32,5 +32,8 @@
     <ClInclude Include="Enum.h">
       <Filter>헤더 파일\Include</Filter>
     </ClInclude>
+    <ClInclude Include="Constant.h">
+      <Filter>헤더 파일\Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

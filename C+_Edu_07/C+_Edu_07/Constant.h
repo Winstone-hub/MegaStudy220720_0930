@@ -1,0 +1,9 @@
+#pragma once
+
+const DWORD KEYID_UP = 1;
+const DWORD KEYID_DOWN = 2;
+const DWORD KEYID_LEFT = 3;
+const DWORD KEYID_RIGHT = 4;
+const DWORD KEYID_ESCAPE = 5;
+const DWORD KEYID_ENTER = 6;
+const DWORD KEYID_SPACE = 7;
