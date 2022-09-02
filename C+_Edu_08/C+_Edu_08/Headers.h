@@ -3,6 +3,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <Windows.h>
+//#include <malloc.h>
+//#include <string.h>
 
 
 #include "Struct.h"

@@ -3,8 +3,7 @@
 // http://patorjk.com/software/taag/#p=testall&f=Graffiti&t=Logo
 
 // ** 키 입력 함수 수정.
-
-
+// ** 파일 입출력.
 
 static char* LogoTex[23] = {
 		   (char*)"LLLLLLLLLLL",
@@ -59,10 +58,6 @@ static DWORD KeyState = 0;
 
 
 
-
-
-
-
 void SetScene(Object* _pPlayer, Object* _pEnemy);
 Object* CreateObject(int _x, int _y, char* _Texture);
 void SetCursorPosition(int _x, int _y);
@@ -83,51 +78,31 @@ bool Collision(Object* _Temp, Object* _Dest);
 
 int main(void)
 {
-	/*
-	unsigned int Number = 0;
+	FILE* pFile = fopen("Test.txt", "r");
 
-	printf("입력 : ");
-	scanf("%d", &Number);
+	char* strList[128];
 
-	// 00000001;
-	// 00000010;
-	// 00000100;
-	// 00001000;
-	// 00010000;
-	// 00100000;
-	// 01000000;
-	// 10000000;
+	int size = 0;
+
+	char str[128];
+
+	while(!feof(pFile))
+	{
+		fgets(str, strlen(str), pFile);
+
+		strList[size] = (char*)malloc(strlen(str) + 1);
+		strcpy(strList[size], str);
+		++size;
+	}
 	
-	// 00000000;
+	for (int i = 0; i < size; ++i)
+		printf("%s", strList[i]);
 
-	if (Number & 1)
-		printf("1 + ");
-
-	if (Number & 2)
-		printf("2 + ");
-
-	if (Number & 4)
-		printf("4 + ");
-
-	if (Number & 8)
-		printf("8 + ");
-
-	if (Number & 16)
-		printf("16 + ");
-
-	if (Number & 32)
-		printf("32 + ");
-
-	if (Number & 64)
-		printf("64 + ");
-
-	if (Number & 128)
-		printf("128 + ");
+	fclose(pFile);
 
 
-	printf("0 = %d 입니다.", Number);
-	*/
 
+	/*
 	ShowCursor(false);
 
 	ULONGLONG Time = GetTickCount64();
@@ -152,6 +127,7 @@ int main(void)
 			SetScene(pPlayer, Enemy);
 		}
 	}
+	*/
 	
 
 	return 0;
