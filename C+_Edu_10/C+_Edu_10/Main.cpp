@@ -1,8 +1,10 @@
-#include "Headers.h"
+#include "../../Common/Headers.h"
+
 // ** 디스코드 링크
 // https://discord.gg/HVwPDyx7
 
 // http://patorjk.com/software/taag/#p=testall&f=Graffiti&t=Logo
+// https://igotit.tistory.com/entry/Visual-Studio-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%86%8D%EC%84%B1%EC%97%90%EC%84%9C-%EB%A7%88%ED%81%AC%EB%A1%9C-%EC%9D%98%EB%AF%B8
 
 // ** 키 입력 함수 수정.
 // ** 파일 입출력.
@@ -33,9 +35,7 @@ SceneID SceneState = SceneID::LOGO;
 // ** 어떤 키를 입력 받았는지 확인하기 위한 변수.
 static DWORD KeyState = 0;
 
-
-
-void SetScene(Object* _pPlayer, Object* _pEnemy);
+void SetScene(Object* _pPlayer, Object* _pEnemy, Object* _pBullet);
 char* ReadAll(char* _FileName);
 void ReadLine(char* _FileName, char** _LogoTex);
 
@@ -53,13 +53,25 @@ void MenuProgress();
 void MenuRender(char* _str[], int _size, int _x, int _y);
 
 void StageInitialize();
-void StageProgress(Object* _Player, Object* _Enemy);
-void StageRender(Object* _Player, Object* _Enemy);
+void StageProgress(Object* _Player, Object* _Enemy, Object* _pBullet);
+void StageRender(Object* _Player, Object* _Enemy, Object* _pBullet);
 bool Collision(Object* _Temp, Object* _Dest);
 
 
+
+bool Check[128];
+
 int main(void)
 {
+	Object* Bullet = (Object*)malloc(sizeof(Object) * 128);
+	
+	for (int i = 0; i < 128; ++i)
+	{
+		Check[i] = false;
+		Bullet[i].Position.x = 10;
+	}
+
+	/*
 	ShowCursor(false);
 
 	ULONGLONG Time = GetTickCount64();
@@ -82,9 +94,10 @@ int main(void)
 			system("cls");
 
 			InputKey();
-			SetScene(pPlayer, Enemy);
+			SetScene(pPlayer, Enemy, Bullet);
 		}
 	}
+	*/
 
 	return 0;
 }
@@ -96,9 +109,9 @@ int main(void)
 //        ┌───────┼───────┐
 //        │　　　　　　　│　　　　　　　│
 // ┌──────┐┌──────┐┌──────┐
-// │　　Logo　　││　　Menu　││    Stage    │ 
+// │　　Logo　  ││　Menu　　 ││    Stage　　│ 
 // └──────┘└──────┘└──────┘
-void SetScene(Object* _pPlayer, Object* _pEnemy)
+void SetScene(Object* _pPlayer, Object* _pEnemy, Object* _pBullet)
 {
 	switch (SceneState)
 	{
@@ -117,8 +130,8 @@ void SetScene(Object* _pPlayer, Object* _pEnemy)
 	break;
 
 	case SceneID::STAGE:
-		StageProgress(_pPlayer, _pEnemy);
-		StageRender(_pPlayer, _pEnemy);
+		StageProgress(_pPlayer, _pEnemy, _pBullet);
+		StageRender(_pPlayer, _pEnemy, _pBullet);
 		break;
 
 	case SceneID::EXIT:
@@ -135,16 +148,16 @@ char* ReadAll(char* _FileName)
 	* r+ = 읽기+쓰기 함께 지원하지만 파일이 없으면 안됨.
 	* w = 쓰기 전용 (덮어쓰기를 하기때문에 주의)
 	* w+ = 읽기+쓰기 함께 지원하지만 덮어쓰기를 하기때문에 주의
-	
+
 	* [파일 입출력 함수]
 	* fopen : 파일 열기, 파일을 열지 않으면 데이터에 접근이 불가.
 	* fclose : 파일 닫기, 파일이 열려있는 상태로 계속 유지됨.
 	* fgetc : 파일에서 문자 읽기
 	* fgets : 파일에서 문자열 읽기
-	
+
 	* fputc : 파일에서 문자 출력
 	* fputs : 파일에서 문자열 출력
-	
+
 	* fscanf : 파일에 데이터 입력(쓰기)
 	* feof : 파일의 문제가 있는지 없는지 확인.
 	*/
@@ -170,7 +183,7 @@ void ReadLine(char* _FileName, char** _Tex)
 		// ** 데이터 한줄씩 불러오기
 		char str[1024] = "";
 		fgets(str, 1024, pFile);
-		
+
 		_Tex[size] = (char*)malloc(strlen(str));
 		strcpy(_Tex[size], str);
 		size++;
@@ -309,19 +322,19 @@ void MenuRender(char* _str[], int _size, int _x, int _y)
 	}
 }
 
-Object* Bullet[128];
-bool Check[128];
-
 void StageInitialize()
 {
+	/*
 	for (int i = 0; i < 128; ++i)
 	{
 		Bullet[i] = CreateObject(0, 0, (i % 2) == 0 ? (char*)"*" : (char*)".");
 		Check[i] = false;
 	}
+	*/
+	
 }
 
-void StageProgress(Object* _Player, Object* _Enemy)
+void StageProgress(Object* _Player, Object* _Enemy, Object* _pBullet)
 {
 	if (KeyState & KEYID_UP)
 	{
@@ -354,37 +367,37 @@ void StageProgress(Object* _Player, Object* _Enemy)
 
 		_Player->Texture = (char*)"▷";
 	}
-
+	/*
 	if (KeyState & KEYID_SPACE)
 	{
 		for (int i = 0; i < 128; ++i)
 		{
-			if (!Check[i])
-			{
-				Bullet[i]->Position.x = 118;
-				Bullet[i]->Position.y = rand() % 40;
-				Check[i] = true;
-				break;
-			}
+			_pBullet[i].Position.x = 118;
+			_pBullet[i].Position.y = rand() % 40;
+			break;
 		}
 	}
 
+	
 	for (int i = 0; i < 128; ++i)
 	{
-		if (Check[i])
-		{
-			Bullet[i]->Position.x -= 1;
+		_pBullet[i].Position.x -= 1;
 
-			if (Collision(_Player, Bullet[i]))
-			{
-				SetCursorPosition(120 >> 1, 1);
-				printf("Bullet 충돌 입니다.");
-			}
+		// ** 
+		if (_Player->Position.x + _Player->Scale.x > _pBullet[i].Position.x &&
+			_pBullet[i].Position.x + _pBullet[i].Scale.x > _Player->Position.x &&
+			_Player->Position.y == _pBullet[i].Position.y)
+		{
+
 		}
 
-		if (Bullet[i]->Position.x <= 1)
-			Check[i] = false;
+		if (_pBullet[i].Position.x <= 1)
+		{
+
+		}
 	}
+	*/
+	
 
 	if (Collision(_Player, _Enemy))
 	{
@@ -396,7 +409,7 @@ void StageProgress(Object* _Player, Object* _Enemy)
 		SceneState = SceneID::EXIT;
 }
 
-void StageRender(Object* _Player, Object* _Enemy)
+void StageRender(Object* _Player, Object* _Enemy, Object* _pBullet)
 {
 	SetCursorPosition(_Player->Position.x, _Player->Position.y);
 	printf("%s", _Player->Texture);
@@ -405,8 +418,8 @@ void StageRender(Object* _Player, Object* _Enemy)
 	{
 		if (Check[i])
 		{
-			SetCursorPosition(Bullet[i]->Position.x, Bullet[i]->Position.y);
-			printf("%s", Bullet[i]->Texture);
+			SetCursorPosition(_pBullet[i].Position.x, _pBullet[i].Position.y);
+			printf("%s", _pBullet[i].Texture);
 		}
 	}
 

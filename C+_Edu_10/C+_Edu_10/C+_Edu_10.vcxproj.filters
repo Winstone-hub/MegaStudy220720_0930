@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="헤더 파일\Include">
-      <UniqueIdentifier>{f057c28c-6427-4fd0-9b28-2934374202b1}</UniqueIdentifier>
+      <UniqueIdentifier>{543ba704-8c86-425e-9010-a4baf751ffc5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
