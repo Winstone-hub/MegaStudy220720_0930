@@ -13,27 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="헤더 파일\Include">
-      <UniqueIdentifier>{607e77b8-411a-45c8-84ae-fb928b5732e7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Common\Headers.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Common\Struct.h">
-      <Filter>헤더 파일\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Common\Enum.h">
-      <Filter>헤더 파일\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Common\Constant.h">
-      <Filter>헤더 파일\Include</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
