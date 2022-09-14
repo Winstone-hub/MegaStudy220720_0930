@@ -11,6 +11,7 @@ Node* Begin;
 Node* End;
 int size = 0;
 
+void erase(int _where);
 void Testcase2(Node* _List, const int _Value);
 void Testcase1(Node* _List, const int _Value);
 void AddData(int _Value);
@@ -22,24 +23,58 @@ int main(void)
 	Node* List = (Node*)malloc(sizeof(Node));
 	Begin = List;
 	End = List;
-	List->Value = 10;
+	List->Value = 1;
 	size = 1;
 
-	AddData(20);
-	AddData(30);
-	AddData(40);
-	AddData(50);
-	Testcase1(List, 60);
-	Testcase2(List, 70);
+	for (int i = 1; i < 50; ++i)
+		AddData(i + 1);
 
-	Output();
-
-	printf("\n<마지막 데이터를 삭제 합니다.>\n");
-	printf("%d\n", Pop());
-
+	erase(50);
+	erase(1);
+	erase(24);
 	Output();
 
 	return 0;
+}
+
+void erase(int _where)
+{
+	// ** 노드가 1개뿐일때에는 리스트를 전체삭제.
+	if (size == 1)
+		// ** 현재는 테스트를 위해서 리턴함.
+		return;
+
+	// ** 첫번째 노드는 이전 노드가 없기 때문에 다음 노드로 연결 할 수 없다. (연결할 노드가 없다)
+	// ** 첫번째 노드는 begin 이 된다.
+	if(_where == 1)
+	{
+		Node* left = Begin;
+		Begin = Begin->Next;
+
+		free(left);
+	}
+	// ** 마지막 노드는 다음 노드가 없기 때문에 이전 노드와 연결 할 수 없다. (연결할 노드가 없다)
+	// ** 마지막 노드는 end 가 된다.
+	else if (_where == size)
+	{
+		Pop();
+	}
+	// ** 중간에 있는 노드들은 _where 로 카운팅을 해서 
+	else
+	{
+		Node* left = Begin;
+		Node* current = nullptr;
+		Node* right = nullptr;
+
+		for (int i = 1; i < _where - 1; ++i)
+			left = left->Next;
+
+		current = left->Next;
+		right = current->Next;
+
+		left->Next = right;
+		free(current);
+	}
 }
 
 // ** 반복문을 사용한 데이터 추가.
@@ -57,7 +92,7 @@ void Testcase2(Node* _List, const int _Value)
 
 	// ** 다음노드로 이동
 	pList = pList->Next;
-	
+
 	// ** 데이터 초기화
 	pList->Value = _Value;
 	pList->Next = nullptr;
@@ -134,7 +169,7 @@ int Pop()
 		// ** if문에서 마지막 노드를 찾지 못했다면 다음노드로 이동.
 		pList = pList->Next;
 	}
-	
+
 	// ** 반복문이 종료되었다면 현재 노드는 마지막 노드 이므로 삭제해준다.
 	free(pList);
 
