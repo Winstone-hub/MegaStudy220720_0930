@@ -109,7 +109,7 @@ int main(void)
 //        忙式式式式式式式托式式式式式式式忖
 //        弛﹛﹛﹛﹛﹛﹛﹛弛﹛﹛﹛﹛﹛﹛﹛弛
 // 忙式式式式式式忖忙式式式式式式忖忙式式式式式式忖
-// 弛﹛﹛Logo﹛  弛弛﹛Menu﹛﹛ 弛弛    Stage﹛﹛弛 
+// 弛﹛﹛Logo﹛  弛弛﹛ Menu﹛﹛ 弛弛    Stage ﹛弛 
 // 戌式式式式式式戎戌式式式式式式戎戌式式式式式式戎
 void SetScene(Object* _pPlayer, Object* _pEnemy, Object* _pBullet)
 {
