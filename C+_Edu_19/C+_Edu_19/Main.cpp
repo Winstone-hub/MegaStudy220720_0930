@@ -61,9 +61,12 @@ int main(void)
 	// ** 현재 값은 시작노드로 지정된 원소이기 때문에 값을 0으로 본다.
 	BulletList->Index = Index;
 
+	BulletList->Count = 0;
+	BulletList->Limit = 0;
+
 	// ** 노드가 존재하지 않기 때문에 마지막을 가르키는 원소도 시작점과 같음.
 	End = Begin;
-
+	
 	Object* Enemy = CreateObject(0, 0, (char*)"Enemy");
 
 	ULONGLONG Time = GetTickCount64();
@@ -142,8 +145,6 @@ void BullseProgress(int _x, int _y, int _Index, char* _Texture)
 	// ** 새롭게 생성된 노드의 Index를 초기화.
 	node->Index = _Index;
 
-	
-
 
 	node->Count = 0;
 
@@ -175,23 +176,33 @@ void Output()
 
 	// ** 현재 노드가 존재 하지 않거나, 
 	// ** 현재 노드가 가르키는 Obj가 존재하지 않을때 까지... (반복)
-	while (node && node->pObj)
+	while (node && node->pObj && (node != Begin))
 	{
-		SetCursorPosition(
-			node->pObj->Position.x,
-			node->pObj->Position.y);
-
-		printf("%d.%s : %d (%d)\n", node->Index, node->pObj->Texture, node->Count, node->Limit);
-
 		if (node->Count >= node->Limit)
 		{
 			// ** 삭제.
+			Node* Temp = node;
+
+			node->Front->Back = node->Back;
+
+			End = (node->Back) ? node->Back : node->Front;
+
+			node = node->Back;
+
+			free(Temp);
 		}
 		else
+		{
 			++node->Count;
 
+			SetCursorPosition(
+				node->pObj->Position.x,
+				node->pObj->Position.y);
 
-		// ** 다음 노드를 가르킨다.
-		node = node->Back;
+			printf("%d.%s : %d (%d)\n", node->Index, node->pObj->Texture, node->Count, node->Limit);
+
+			// ** 다음 노드를 가르킨다.
+			node = node->Back;
+		}
 	}
 }
