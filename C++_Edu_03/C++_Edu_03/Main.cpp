@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -8,12 +9,14 @@ class Object
 {
 public:
 	int Number;
+	/*
 	Object() : Number(0) { }
 
 	Object(int _number) : Number(_number)
 	{
 
 	}
+	*/
 };
 
 int main(void)
@@ -91,6 +94,19 @@ int main(void)
 	cout << *num << endl;
 	*/
 
+
+
+	//==========================================================
+	Object* pObj = new Object[100];
+	Object* pObj2 = pObj;
+
+	for (int i = 0; i < 100; ++i)
+		cout << pObj[i].Number << endl;
+
+	delete[] pObj;
+
+	// ** 데이터 공간에 접근은 가능 하지만 실제로 사용할 수 없다.
+	pObj2[0].Number;
 
 	return 0;
 }
