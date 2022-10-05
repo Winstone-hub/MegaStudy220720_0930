@@ -21,7 +21,7 @@ class Parent
 
 };
 
-class Child
+class Child : public Parent
 {
 
 };
