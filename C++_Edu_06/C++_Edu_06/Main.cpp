@@ -12,7 +12,6 @@ public:
 	{
 		cout << Number << endl;
 	}
-
 public:
 	Test() : Number(0)
 	{
@@ -36,6 +35,9 @@ public:
 		return Test(Number + p.Number);
 	}
 };
+
+
+
 
 
 int main(void)
