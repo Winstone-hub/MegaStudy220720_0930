@@ -12,12 +12,8 @@ private:
 public:
 	string GetName() { return Name; }
 	void SetName(string _Name) { Name = _Name; }
-	/*
-	void SetName(string Name)
-	{
-		this->Name = Name;
-	}
-	*/
+
+	//void SetName(string Name) { this->Name = Name; }
 };
 
 
@@ -52,8 +48,63 @@ Singleton* Singleton::Instance = nullptr;
 
 
 
+// ** 연산자 오버로딩
+class Operator
+{
+public:
+	int Number;
+
+public:
+	Operator operator+(Operator& _ref)
+	{
+		return Operator(Number + _ref.Number);
+	}
+
+	Operator operator-(Operator& _ref)
+	{
+		return Operator(Number - _ref.Number);
+	}
+
+	void operator+=(Operator& _ref)
+	{
+		Number += _ref.Number;
+	}
+
+	/*
+	*  [반환값] =  피연산자 연산자 피연산자
+	*                 ↓      ↓     ↓
+	[반환값의 형태] [자기자신]+ ([연산할 항목])
+	{
+		return [반환값]
+	}
+	*/
+
+
+public:
+	Operator() : Number(0) { } 
+	Operator(int _Number) : Number(_Number) { }
+};
+
 int main(void)
 {
+	// ** 단정도 부동 소수점 : IEEE 754
+	//https://www.h-schmidt.net/
+
+
+	/*
+	Operator oper1, oper2;
+	oper1.Number = 10;
+	oper2.Number = 20;
+
+	Operator oper3 = oper1 + oper2;
+	cout << oper3.Number << endl;
+
+	oper1 += oper2;
+	cout << oper1.Number << endl;
+	*/
+
+
+	/*
 	{
 		Object* O1 = new Object();
 		O1->SetName("홍길동");
@@ -63,6 +114,7 @@ int main(void)
 	
 	string str = Singleton::GetInstance()->GetObject()->GetName();
 	cout << str << endl;
+	*/
 
 	return 0;
 }
