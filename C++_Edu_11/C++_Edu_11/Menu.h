@@ -9,7 +9,7 @@ public:
 	virtual void Render(void)override;
 	virtual void Release(void)override;
 public:
-	Scene();
-	virtual ~Scene();
+	Menu();
+	virtual ~Menu();
 };
 

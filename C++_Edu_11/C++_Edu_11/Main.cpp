@@ -29,6 +29,20 @@ int main(void)
 	*/
 	//=======================================
 
+
+	/*
+	Transform Objects[MAX];
+
+	Objects[Player].Position;
+	Objects[Enemy].Rotation;
+	Objects[Bullet].Scale;
+	*/
+
+	// ObjectID::MAX;
+
+
+
+
 	ULONGLONG Time = GetTickCount64();
 
 	MainUpdate Main;

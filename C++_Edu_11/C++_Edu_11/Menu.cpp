@@ -12,7 +12,7 @@ Menu::~Menu()
 
 void Menu::Start(void)
 {
-
+	cout << "Menu" << endl;
 }
 
 void Menu::Update(void)

@@ -12,7 +12,7 @@ Logo::~Logo()
 
 void Logo::Start(void)
 {
-
+	cout << "Logo" << endl;
 }
 
 void Logo::Update(void)

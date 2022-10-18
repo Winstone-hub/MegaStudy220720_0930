@@ -16,7 +16,7 @@ public:
 private:
 	Scene* SceneState;
 public:
-	void SetScene();
+	void SetScene(SceneID _SceneID);
 	void Update();
 	void Render();
 	void Release();
@@ -25,4 +25,3 @@ private:
 public:
 	~ScaneManager();
 };
-
