@@ -16,7 +16,6 @@ ScaneManager::~ScaneManager()
 	Release();
 }
 
-
 void ScaneManager::SetScene(SceneID _SceneID)
 {
 	if (SceneState != nullptr)

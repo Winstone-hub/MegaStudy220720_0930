@@ -1,4 +1,6 @@
 #include "Logo.h"
+#include "ScaneManager.h"
+
 
 Logo::Logo()
 {
@@ -17,7 +19,8 @@ void Logo::Start(void)
 
 void Logo::Update(void)
 {
-
+	if (GetAsyncKeyState(VK_RETURN))
+		ScaneManager::GetInstance()->SetScene(MENUID);
 }
 
 void Logo::Render(void)

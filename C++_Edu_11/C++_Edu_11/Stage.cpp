@@ -1,4 +1,5 @@
 #include "Stage.h"
+#include "ScaneManager.h"
 
 
 Stage::Stage()
@@ -18,7 +19,8 @@ void Stage::Start(void)
 
 void Stage::Update(void)
 {
-
+	if (GetAsyncKeyState(VK_RETURN))
+		ScaneManager::GetInstance()->SetScene(EXITID);
 }
 
 void Stage::Render(void)
