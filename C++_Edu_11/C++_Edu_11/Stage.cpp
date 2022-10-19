@@ -1,5 +1,6 @@
 #include "Stage.h"
-#include "ScaneManager.h"
+#include "Child.h"
+
 
 
 Stage::Stage()
@@ -9,26 +10,27 @@ Stage::Stage()
 
 Stage::~Stage()
 {
-
+	Release();
 }
 
 void Stage::Start(void)
 {
-	cout << "Stage" << endl;
+	Testcase = new Child;
+	Testcase->Start();
 }
 
 void Stage::Update(void)
 {
-	if (GetAsyncKeyState(VK_RETURN))
-		ScaneManager::GetInstance()->SetScene(EXITID);
+	Testcase->Update();
 }
 
 void Stage::Render(void)
 {
-
+	Testcase->Render();
 }
 
 void Stage::Release(void)
 {
-
+	delete Testcase;
+	Testcase = nullptr;
 }

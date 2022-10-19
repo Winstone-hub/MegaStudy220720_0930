@@ -1,5 +1,6 @@
 #include "Logo.h"
 #include "ScaneManager.h"
+#include "Child.h"
 
 
 Logo::Logo()

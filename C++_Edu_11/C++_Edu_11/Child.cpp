@@ -1,4 +1,5 @@
 #include "Child.h"
+#include "ScaneManager.h"
 
 Child::Child()
 {
@@ -19,7 +20,8 @@ void Child::Start(void)
 
 void Child::Update(void)
 {
-
+	if (GetAsyncKeyState(VK_RETURN))
+		ScaneManager::GetInstance()->SetScene(EXITID);
 }
 
 void Child::Render(void)
