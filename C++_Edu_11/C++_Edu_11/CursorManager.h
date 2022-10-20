@@ -15,6 +15,16 @@ public:
 		cout << _str;
 	}
 
+	static void Renderer(float _x, float _y, int _Value, int _Color = 15)
+	{
+		COORD pos = { (SHORT)_x, (SHORT)_y };
+
+		SetConsoleCursorPosition(
+			GetStdHandle(STD_OUTPUT_HANDLE), pos);
+
+		SetColor(_Color);
+		cout << _Value;
+	}
 private:
 	static void SetColor(int _Color)
 	{

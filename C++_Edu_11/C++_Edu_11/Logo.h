@@ -3,6 +3,12 @@
 
 class Logo : public Scene
 {
+private:
+	Transform Info;
+	int Color;
+	ULONGLONG Time;
+	ULONGLONG DelayTime;
+	int Switching;
 public:
 	virtual void Start(void)override;
 	virtual void Update(void)override;

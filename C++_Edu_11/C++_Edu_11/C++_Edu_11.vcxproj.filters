@@ -122,5 +122,8 @@
     <ClInclude Include="CursorManager.h">
       <Filter>소스 파일\99. Manager\CursorManager</Filter>
     </ClInclude>
+    <ClInclude Include="Constant.h">
+      <Filter>헤더 파일\Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

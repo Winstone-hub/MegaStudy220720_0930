@@ -4,12 +4,12 @@
 
 Child::Child()
 {
-	cout << "Child 持失切" << endl;
+
 }
 
 Child::~Child()
 {
-	cout << "Child 社瑚切" << endl;
+
 }
 
 void Child::Start(void)

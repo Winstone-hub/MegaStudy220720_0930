@@ -25,7 +25,7 @@ void Menu::Start(void)
 			Objects[i][j]->Start();
 		}
 	}
-	ScaneManager::GetInstance()->SetScene(STAGEID);
+	//ScaneManager::GetInstance()->SetScene(STAGEID);
 }
 
 void Menu::Update(void)
