@@ -15,13 +15,15 @@ Logo::~Logo()
 
 void Logo::Start(void)
 {
-	cout << "Logo" << endl;
+	ScaneManager::GetInstance()->SetScene(MENUID);
 }
 
 void Logo::Update(void)
 {
+	/*
 	if (GetAsyncKeyState(VK_RETURN))
 		ScaneManager::GetInstance()->SetScene(MENUID);
+	*/
 }
 
 void Logo::Render(void)

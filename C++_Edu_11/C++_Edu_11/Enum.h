@@ -20,11 +20,11 @@ enum {
 	MAX,
 };
 
-enum class ObjectID {
-	Player,
-	Enemy,
-	Bullet,
-	MAX,
+enum ObjectID {
+	EnemyID,
+	BulletID,
+	EndID,
+	MaxID = 4,
 };
 
 

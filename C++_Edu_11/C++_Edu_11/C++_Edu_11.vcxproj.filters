@@ -43,6 +43,12 @@
     <Filter Include="소스 파일\01. Scene\Stage">
       <UniqueIdentifier>{83e6371d-b48d-4483-b3d9-a3e381b97d5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\99. Manager\ObjectManager">
+      <UniqueIdentifier>{95064b66-2516-4a07-ae8d-8fa2a602daf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\99. Manager\CursorManager">
+      <UniqueIdentifier>{94ce961d-4a8f-4a0b-8e45-4acbd6658f47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -71,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\01. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>소스 파일\99. Manager\ObjectManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +115,12 @@
     </ClInclude>
     <ClInclude Include="Enum.h">
       <Filter>헤더 파일\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>소스 파일\99. Manager\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CursorManager.h">
+      <Filter>소스 파일\99. Manager\CursorManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

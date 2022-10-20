@@ -3,22 +3,10 @@
 #include "MainUpdate.h"
 
 
-void SetColor(int _Color)
-{
-	SetConsoleTextAttribute(
-		GetStdHandle(STD_OUTPUT_HANDLE), _Color);
-}
+
 
 int main(void)
 {
-	SetColor(4);
-	cout << "Hello ";
-
-	SetColor(6);
-	cout << "World!!" << endl;
-
-	SetColor(15);
-
 	ULONGLONG Time = GetTickCount64();
 
 	MainUpdate Main;
@@ -26,8 +14,10 @@ int main(void)
 
 	while (true)
 	{
-		if (Time < GetTickCount64())
+		if (Time + 80 < GetTickCount64())
 		{
+			system("cls");
+
 			Time = GetTickCount64();
 
 			Main.Update();

@@ -145,18 +145,21 @@
     <ClCompile Include="MainUpdate.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="ScaneManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Child.h" />
+    <ClInclude Include="CursorManager.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Headers.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainUpdate.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="ScaneManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Stage.h" />

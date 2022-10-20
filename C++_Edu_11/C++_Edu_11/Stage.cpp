@@ -2,7 +2,6 @@
 #include "Child.h"
 
 
-
 Stage::Stage()
 {
 
@@ -15,22 +14,19 @@ Stage::~Stage()
 
 void Stage::Start(void)
 {
-	Testcase = new Child;
-	Testcase->Start();
 }
 
 void Stage::Update(void)
 {
-	Testcase->Update();
+	Objects[EnemyID][0]->Update();
 }
 
 void Stage::Render(void)
 {
-	Testcase->Render();
+	Objects[EnemyID][0]->Render();
 }
 
 void Stage::Release(void)
 {
-	delete Testcase;
-	Testcase = nullptr;
+
 }
