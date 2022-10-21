@@ -22,8 +22,26 @@ void Logo::Start(void)
 	Color = 0;
 	Switching = 0;
 	Time = GetTickCount64();
-	DelayTime = 150;
+	DelayTime = 100;
 	Switching = 0;
+
+
+
+	Sliders[0].Texture = "¦£";
+	Sliders[1].Texture = "¡¬";
+	Sliders[2].Texture = "¡¬";
+	Sliders[3].Texture = "¡¬";
+	Sliders[4].Texture = "¡¬";
+	Sliders[5].Texture = "¡¬";
+	Sliders[6].Texture = "¦¦";
+
+	for (int i = 0; i < 7; ++i)
+	{
+		Sliders[i].Info.Position = Vector3(118.0f + (i * 2), 10.0f + i, 0.0f);
+		Sliders[i].Info.Rotation = Vector3(0.0f, 0.0f, 0.0f);
+		Sliders[i].Info.Scale = Vector3(
+			Sliders[i].Texture.size(), 1.0f, 0.0f);
+	}
 }
 
 
@@ -46,10 +64,38 @@ void Logo::Update(void)
 	if(GetAsyncKeyState(VK_RETURN))
 		ScaneManager::GetInstance()->SetScene(MENUID);
 
+
+	//=======================================
+	// Logo Slider
+	//=======================================
+
+	for (int i = 0; i < 7; ++i)
+	{
+		if (Sliders[6].Info.Position.x > 60.0f)
+		{
+			Sliders[i].Info.Position.x -= 5.0f;
+
+			if (116.0f > (Sliders[0].Info.Position.x + Sliders[0].Info.Scale.x))
+			{
+				Sliders[0].Texture += "¦¡";
+				Sliders[0].Info.Scale.x += 2;
+			}
+			if (116.0f > (Sliders[6].Info.Position.x + Sliders[6].Info.Scale.x))
+			{
+				Sliders[6].Texture += "¦¡";
+				Sliders[6].Info.Scale.x += 2;
+			}
+		}
+	}
+
+
+
 	if (Time + DelayTime < GetTickCount64())
 	{
 		Time = GetTickCount64();
-
+		//=======================================
+		// Insert coin ±ôºýÀÓ.
+		//=======================================
 		++Switching;
 		switch (Switching)
 		{
@@ -64,19 +110,25 @@ void Logo::Update(void)
 			break;
 		case 3:
 			Color = BlackColors[3];
-			DelayTime = 1000;
 			break;
 		case 4:
-			Color = BlackColors[3];
-			DelayTime = 150;
+			Color = BlackColors[4];
+			DelayTime = 1000;
 			break;
 		case 5:
-			Color = BlackColors[2];
+			Color = BlackColors[4];
+			DelayTime = 100;
 			break;
 		case 6:
-			Color = BlackColors[1];
+			Color = BlackColors[3];
 			break;
 		case 7:
+			Color = BlackColors[2];
+			break;
+		case 8:
+			Color = BlackColors[1];
+			break;
+		case 9:
 			Color = BlackColors[0];
 			break;
 		default:
@@ -93,6 +145,17 @@ void Logo::Render(void)
 	CursorManager::Renderer(0, 1, "Y : ");
 	CursorManager::Renderer(4, 1, Info.Position.y);
 #endif // DEBUG
+
+
+	for (int i = 0; i < 7; ++i)
+	{
+		if (Sliders[i].Info.Position.x < 118.0f)
+			CursorManager::Renderer(
+				Sliders[i].Info.Position.x, 
+				Sliders[i].Info.Position.y + i,
+				Sliders[i].Texture, 15);
+	}
+
 
 	CursorManager::Renderer(Info.Position.x, Info.Position.y + 0, " ___   __    _  _______  _______  ______    _______    _______  _______  ___   __    _", Color);
 	CursorManager::Renderer(Info.Position.x, Info.Position.y + 1, "|   | |  |  | ||       ||       ||    _ |  |       |  |       ||       ||   | |  |  | |", Color);
