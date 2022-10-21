@@ -1,11 +1,15 @@
 #pragma once
 #include "Scene.h"
 
+//=======================================
+// Logo Slider
+//=======================================
 struct SliderTransform
 {
 	Transform Info;
 	string Texture;
 };
+
 
 class Logo : public Scene
 {
@@ -16,6 +20,10 @@ private:
 	ULONGLONG DelayTime;
 	int Switching;
 	
+
+	//=======================================
+	// Logo Slider
+	//=======================================
 	SliderTransform Sliders[7];
 	
 public:

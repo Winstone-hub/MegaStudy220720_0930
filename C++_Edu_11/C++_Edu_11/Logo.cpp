@@ -26,7 +26,9 @@ void Logo::Start(void)
 	Switching = 0;
 
 
-
+	//=======================================
+	// Logo Slider
+	//=======================================
 	Sliders[0].Texture = "¦£";
 	Sliders[1].Texture = "¡¬";
 	Sliders[2].Texture = "¡¬";
