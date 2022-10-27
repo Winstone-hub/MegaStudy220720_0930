@@ -3,8 +3,6 @@
 #include "MainUpdate.h"
 
 
-
-
 int main(void)
 {
 	ULONGLONG Time = GetTickCount64();

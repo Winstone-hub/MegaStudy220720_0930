@@ -24,7 +24,7 @@ private:
 	//=======================================
 	// Logo Slider
 	//=======================================
-	SliderTransform Sliders[7];
+	SliderTransform Sliders[8];
 	
 public:
 	virtual void Start(void)override;

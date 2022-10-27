@@ -35,17 +35,17 @@ void Logo::Start(void)
 	Sliders[3].Texture = "′";
 	Sliders[4].Texture = "′";
 	Sliders[5].Texture = "′";
-	Sliders[6].Texture = "戌";
+	Sliders[6].Texture = "′";
+	Sliders[7].Texture = "戌";
 
-	for (int i = 0; i < 7; ++i)
+	for (int i = 0; i < 8; ++i)
 	{
-		Sliders[i].Info.Position = Vector3(118.0f + (i * 2), 10.0f + i, 0.0f);
+		Sliders[i].Info.Position = Vector3(118.0f + (i * 2), 3.0f + i, 0.0f);
 		Sliders[i].Info.Rotation = Vector3(0.0f, 0.0f, 0.0f);
 		Sliders[i].Info.Scale = Vector3(
-			Sliders[i].Texture.size(), 1.0f, 0.0f);
+			(float)Sliders[i].Texture.size(), 1.0f, 0.0f);
 	}
 }
-
 
 
 void Logo::Update(void)
@@ -71,9 +71,9 @@ void Logo::Update(void)
 	// Logo Slider
 	//=======================================
 
-	for (int i = 0; i < 7; ++i)
+	for (int i = 0; i < 8; ++i)
 	{
-		if (Sliders[6].Info.Position.x > 60.0f)
+		if (Sliders[7].Info.Position.x > 65.0f)
 		{
 			Sliders[i].Info.Position.x -= 5.0f;
 
@@ -82,14 +82,21 @@ void Logo::Update(void)
 				Sliders[0].Texture += "式";
 				Sliders[0].Info.Scale.x += 2;
 			}
-			if (116.0f > (Sliders[6].Info.Position.x + Sliders[6].Info.Scale.x))
+			if (116.0f > (Sliders[7].Info.Position.x + Sliders[7].Info.Scale.x))
 			{
-				Sliders[6].Texture += "式";
-				Sliders[6].Info.Scale.x += 2;
+				Sliders[7].Texture += "式";
+				Sliders[7].Info.Scale.x += 2;
+
+				if (i == 7)
+				{
+					Sliders[7].Texture += "式";
+					Sliders[7].Info.Scale.x += 2;
+					Sliders[7].Texture += "式";
+					Sliders[7].Info.Scale.x += 2;
+				}
 			}
 		}
 	}
-
 
 
 	if (Time + DelayTime < GetTickCount64())
@@ -134,7 +141,7 @@ void Logo::Update(void)
 			Color = BlackColors[0];
 			break;
 		default:
-			Switching = 0;
+			Switching = -1;
 		}
 	}
 }
@@ -149,7 +156,7 @@ void Logo::Render(void)
 #endif // DEBUG
 
 
-	for (int i = 0; i < 7; ++i)
+	for (int i = 0; i < 8; ++i)
 	{
 		if (Sliders[i].Info.Position.x < 118.0f)
 			CursorManager::Renderer(
@@ -157,7 +164,6 @@ void Logo::Render(void)
 				Sliders[i].Info.Position.y + i,
 				Sliders[i].Texture, 15);
 	}
-
 
 	CursorManager::Renderer(Info.Position.x, Info.Position.y + 0, " ___   __    _  _______  _______  ______    _______    _______  _______  ___   __    _", Color);
 	CursorManager::Renderer(Info.Position.x, Info.Position.y + 1, "|   | |  |  | ||       ||       ||    _ |  |       |  |       ||       ||   | |  |  | |", Color);
