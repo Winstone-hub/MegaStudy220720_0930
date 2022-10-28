@@ -19,13 +19,6 @@ public:
 };
 
 
-
-
-
-
-
-
-
 Object* CreateObject(int _kor, int _eng, int _math)
 {
 	Object* pObj = new Object;
@@ -160,8 +153,8 @@ int main(void)
 	
 
 	{
-		/**/
 		
+		/**/
 		// ** 원하는 위치의 값을 삭제 한다.
 		for (vector<Object*>::iterator iter = Objects.begin();
 			iter != Objects.end(); )
