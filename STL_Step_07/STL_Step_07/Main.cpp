@@ -18,39 +18,73 @@ int main(void)
 
 		if (GetAsyncKeyState(VK_RETURN))
 		{
+			string key = "Alatreon";
+
+
 			if (!DesableList.empty())
 			{
-				Object* pObj = DesableList.front();
+				auto iter = DesableList.find(key);
+
+				Object* pObj = iter->second.front();
 				pObj->Start();
-				EnableList.push_back(pObj);
-				DesableList.pop_front();
+
+
+				auto iter2 = EnableList.find(pObj->GetKey());
+
+				if (iter2 == EnableList.end())
+				{
+					list<Object*> temp;
+					temp.push_back(pObj);
+					EnableList.insert(make_pair(pObj->GetKey(), temp));
+				}
+				else
+					iter2->second.push_back(pObj);
+
+				DesableList.find(pObj->GetKey())->second.pop_front();
 			}
 			else
 			{
 				Object* pObj = new Alatreon;
 				pObj->Start();
-				EnableList.push_back(pObj);
+				
+				auto iter = EnableList.find(pObj->GetKey());
+
+				if (iter == EnableList.end())
+				{
+					//->second.push_back(pObj);
+				}
 			}
 		}
 
 		//for(auto object : EnableList)
-		for (auto iter = EnableList.begin(); iter != EnableList.end(); )
+		for (auto iter = EnableList.begin(); iter != EnableList.end(); ++iter)
 		{
-			int result = (*iter)->Update();
-			(*iter)->Render();
-
-			if (result == 1)
+			for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); )
 			{
-				DesableList.push_back((*iter));
-				iter = EnableList.erase(iter);
+				int result = (*iter2)->Update();
+				(*iter2)->Render();
+
+				if (result == 1)
+				{
+					DesableList.find((*iter2)->GetKey())->second.push_back((*iter2));
+					iter2 = EnableList.find((*iter2)->GetKey())->second.erase(iter2);
+				}
+				else
+					++iter2;
 			}
-			else
-				++iter;
 		}
 
-		cout << "[DesableList]" << endl;
-		for (auto object : DesableList)
-			cout << object->GetKey() << endl;
+		
+		for (auto iter = EnableList.begin(); iter != EnableList.end(); ++iter)
+		{
+			cout << "[DesableList]" << endl;
+			cout << " [" << iter->first << "] " << endl;
+			
+			for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); )
+			{
+				cout << (*iter2)->GetKey() << endl;
+			}
+		}
 	}
 
 	return 0;
