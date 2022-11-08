@@ -142,11 +142,13 @@
     <ClCompile Include="Alatreon.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alatreon.h" />
     <ClInclude Include="Headers.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectPool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

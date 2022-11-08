@@ -22,6 +22,12 @@
     <Filter Include="소스 파일\DesignPattern\Object\Alatreon">
       <UniqueIdentifier>{9355078f-af51-4e39-b90b-f991a497a0a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Pattern">
+      <UniqueIdentifier>{f77237ef-23aa-4aa7-825b-a64f91f1365a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Pattern\ObjectPool">
+      <UniqueIdentifier>{bd4c2759-7073-4951-b47e-10ca13fdf56b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -33,6 +39,9 @@
     <ClCompile Include="Alatreon.cpp">
       <Filter>소스 파일\DesignPattern\Object\Alatreon</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectPool.cpp">
+      <Filter>소스 파일\Pattern\ObjectPool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object.h">
@@ -43,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="Alatreon.h">
       <Filter>소스 파일\DesignPattern\Object\Alatreon</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>소스 파일\Pattern\ObjectPool</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
