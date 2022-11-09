@@ -9,3 +9,9 @@
 #include <map>
 
 using namespace std;
+
+
+enum class ListType {
+	Enable,
+	Desable,
+};

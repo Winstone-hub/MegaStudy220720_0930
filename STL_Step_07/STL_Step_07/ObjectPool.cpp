@@ -14,21 +14,28 @@ ObjectPool::~ObjectPool()
 
 }
 
-list<Object*>* ObjectPool::findMapList(string key, map<string, list<Object*>*>* mapList)
+list<Object*>* ObjectPool::GetDesableObjectList(string key)
 {
 	// ** 오브젝트가 담겨있는 리스트가 존재하는지 탐색
-	auto iter = mapList->find(key);
+	auto iter = DesableList.find(key);
 
 	// ** 존재 한다면 리스트를 반환하고
-	if (iter != mapList->end())
+	if (iter != DesableList.end())
 		return iter->second;
 
 	// ** 그렇지 않다면 nullptr을 반환한다.
 	return nullptr;
 }
 
-void ObjectPool::addMapObject(Object* pObj, map<string, list<Object*>*>* mapList)
+void ObjectPool::AddObjectList(Object* pObj, ListType type)
 {
+	map<string, list<Object*>*>* mapList = nullptr;
+
+	if (type == ListType::Enable)
+		mapList = &EnableList;
+	else
+		mapList = &DesableList;
+
 	// ** 오브젝트가 담겨야 할 공간이 이미 존재하는지 탐색
 	auto iter = mapList->find(pObj->GetKey());
 
@@ -43,9 +50,53 @@ void ObjectPool::addMapObject(Object* pObj, map<string, list<Object*>*>* mapList
 		iter->second->push_back(pObj);
 }
 
+void ObjectPool::CreateObjectList()
+{
+	/*
+	list<Object*>* plist = GetDesableObjectList("Alatreon");
+
+	if (plist == nullptr)
+	{
+
+	}
+	else
+	{
+
+	}
+	*/
+
+	for (int i = 0; i < 4; ++i)
+	{
+		Object* pObj = new Alatreon();
+		pObj->Start();
+
+		AddObjectList(pObj, ListType::Desable);
+	}
+
+	Object* pObj = new Alatreon();
+	pObj->Start();
+
+	AddObjectList(pObj);
+}
+
 void ObjectPool::Update()
 {
-	
+	for (auto iter = EnableList.begin(); iter != EnableList.end(); ++iter)
+	{
+		for (auto iter2 = iter->second->begin(); iter2 != iter->second->end();)
+		{
+			int result = (*iter2)->Update();
+
+			if (result == 1)
+			{
+				AddObjectList((*iter2), ListType::Desable);
+				iter2 = iter->second->erase(iter2);
+			}
+			else
+				++iter2;
+		}
+	}
+
 }
 
 void ObjectPool::Render()
