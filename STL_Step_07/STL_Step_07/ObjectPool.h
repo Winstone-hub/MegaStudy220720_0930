@@ -16,8 +16,8 @@ public:
 	}
 
 private:
-	map<string, list<Object*>*> EnableList;
-	map<string, list<Object*>*> DesableList;
+	map<string, list<Object*>> EnableList;
+	map<string, list<Object*>> DesableList;
 
 public:
 	list<Object*>* GetDesableObjectList(string key);

@@ -1,5 +1,6 @@
 #include "Headers.h"
 #include "ObjectPool.h"
+#include "Prototype.h"
 #include "Alatreon.h"
 
 // ** DesignPattern
@@ -8,6 +9,24 @@
 
 int main(void)
 {
+	Prototype::GetInstance()->Initialize();
+
+	{
+		Object* pObj = new Alatreon;
+		pObj->Start();
+		pObj->SetKey("Enemy");
+		//Prototype::GetInstance()->AddProtoTypeObject(pObj);
+
+		if(Prototype::GetInstance()->AddProtoTypeObject(pObj))
+		{
+			//continue;
+			//break;
+			
+			//return;
+		}
+	}
+
+
 	list<Object*>* objectList = ObjectPool::GetInstance()->GetDesableObjectList("Alatreon");
 
 	if (objectList == nullptr)

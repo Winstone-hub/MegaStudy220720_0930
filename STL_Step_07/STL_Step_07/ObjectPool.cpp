@@ -1,5 +1,6 @@
 #include "ObjectPool.h"
 #include "Alatreon.h"
+#include "Prototype.h"
 
 ObjectPool* ObjectPool::Instance = nullptr;
 
@@ -21,7 +22,7 @@ list<Object*>* ObjectPool::GetDesableObjectList(string key)
 
 	// ** 존재 한다면 리스트를 반환하고
 	if (iter != DesableList.end())
-		return iter->second;
+		return &iter->second;
 
 	// ** 그렇지 않다면 nullptr을 반환한다.
 	return nullptr;
@@ -29,29 +30,30 @@ list<Object*>* ObjectPool::GetDesableObjectList(string key)
 
 void ObjectPool::AddObjectList(Object* pObj, ListType type)
 {
-	map<string, list<Object*>*>* mapList = nullptr;
+	map<string, list<Object*>> mapList;
 
 	if (type == ListType::Enable)
-		mapList = &EnableList;
+		mapList = EnableList;
 	else
-		mapList = &DesableList;
+		mapList = DesableList;
 
 	// ** 오브젝트가 담겨야 할 공간이 이미 존재하는지 탐색
-	auto iter = mapList->find(pObj->GetKey());
+	auto iter = mapList.find(pObj->GetKey());
 
 	// ** 존재하지 않는다면 새로운 공간을 확보하고 추가한다.
-	if (iter == mapList->end())
+	if (iter == mapList.end())
 	{
-		list<Object*>* temp = new list<Object*>();
-		temp->push_back(pObj);
-		mapList->insert(make_pair(pObj->GetKey(), temp));
+		list<Object*> temp;
+		temp.push_back(pObj);
+		mapList.insert(make_pair(pObj->GetKey(), temp));
 	}
 	else // ** 존재 한다면 그 해당 위치에 객체를 넣는다.
-		iter->second->push_back(pObj);
+		iter->second.push_back(pObj);
 }
 
 void ObjectPool::CreateObjectList()
 {
+
 	/*
 	list<Object*>* plist = GetDesableObjectList("Alatreon");
 
@@ -64,33 +66,43 @@ void ObjectPool::CreateObjectList()
 
 	}
 	*/
+	Object* pObj = Prototype::GetInstance()->findObject("Alatreon");
 
 	for (int i = 0; i < 4; ++i)
 	{
+		/*
 		Object* pObj = new Alatreon();
 		pObj->Start();
-
 		AddObjectList(pObj, ListType::Desable);
+		*/
+		if (pObj != nullptr)
+			AddObjectList(pObj->Clone(), ListType::Desable);
+		else
+			throw "생성 실패";
 	}
+	AddObjectList(pObj->Clone());
 
+	/*
 	Object* pObj = new Alatreon();
 	pObj->Start();
 
 	AddObjectList(pObj);
+	*/
+	
 }
 
 void ObjectPool::Update()
 {
 	for (auto iter = EnableList.begin(); iter != EnableList.end(); ++iter)
 	{
-		for (auto iter2 = iter->second->begin(); iter2 != iter->second->end();)
+		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end();)
 		{
 			int result = (*iter2)->Update();
 
 			if (result == 1)
 			{
 				AddObjectList((*iter2), ListType::Desable);
-				iter2 = iter->second->erase(iter2);
+				iter2 = iter->second.erase(iter2);
 			}
 			else
 				++iter2;
@@ -107,7 +119,7 @@ void ObjectPool::Render()
 		cout << "[Enable]" << endl;
 		cout << " [" << iter->first << "] " << endl;
 
-		for (auto iter2 = iter->second->begin(); iter2 != iter->second->end(); ++iter2)
+		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); ++iter2)
 			cout << (*iter2)->GetKey() << endl;
 	}
 
@@ -117,7 +129,7 @@ void ObjectPool::Render()
 		cout << "[Desable]" << endl;
 		cout << " [" << iter->first << "] " << endl;
 
-		for (auto iter2 = iter->second->begin(); iter2 != iter->second->end(); ++iter2)
+		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); ++iter2)
 			cout << (*iter2)->GetKey() << endl;
 	}
 }

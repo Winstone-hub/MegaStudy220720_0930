@@ -9,8 +9,17 @@ Alatreon::~Alatreon()
 }
 
 
+Object* Alatreon::Initialize()
+{
+	key = "Alatreon";
+	count = 100;
+
+	return this;
+}
+
 void Alatreon::Start()
 {
+	Info = INFO(0, 0, 0);
 	key = "Alatreon";
 	count = 100;
 }
