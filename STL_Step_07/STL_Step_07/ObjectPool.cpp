@@ -53,7 +53,6 @@ void ObjectPool::AddObjectList(Object* pObj, ListType type)
 
 void ObjectPool::CreateObjectList()
 {
-
 	/*
 	list<Object*>* plist = GetDesableObjectList("Alatreon");
 
@@ -88,7 +87,6 @@ void ObjectPool::CreateObjectList()
 
 	AddObjectList(pObj);
 	*/
-	
 }
 
 void ObjectPool::Update()
@@ -108,7 +106,6 @@ void ObjectPool::Update()
 				++iter2;
 		}
 	}
-
 }
 
 void ObjectPool::Render()

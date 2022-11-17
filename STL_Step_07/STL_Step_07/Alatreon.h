@@ -10,13 +10,9 @@ public:
 	virtual void Render()override;
 	virtual void OnDestroy(Object* pObj)override;
 public:
-	virtual Object* Clone()override
-	{
-		return new Alatreon(*this);
-	}
+	virtual Object* Clone()override { return new Alatreon(*this); }
 public:
 	Alatreon();
-	Alatreon(INFO _Info) : Object(_Info) {};
+	Alatreon(const INFO& _Info) : Object(_Info) {};
 	virtual ~Alatreon();
 };
-
