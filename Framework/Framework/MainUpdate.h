@@ -1,5 +1,6 @@
 #pragma once
 
+
 class MainUpdate
 {
 public:
@@ -11,4 +12,3 @@ public:
 	MainUpdate();
 	~MainUpdate();
 };
-

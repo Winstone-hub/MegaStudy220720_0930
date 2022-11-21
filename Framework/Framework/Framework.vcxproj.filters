@@ -49,6 +49,12 @@
     <Filter Include="소스 파일\Mamager\InputManager">
       <UniqueIdentifier>{ec7279d6-a304-45e1-a358-341a0abb27a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Mamager\Prototype">
+      <UniqueIdentifier>{84c254ae-6d4b-4593-b37e-7edf31f18822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Mamager\ObjectPool">
+      <UniqueIdentifier>{ec1fac97-0f7f-4ba3-916e-ca1df6ce583e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -83,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>소스 파일\Mamager\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPool.cpp">
+      <Filter>소스 파일\Mamager\ObjectPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Prototype.cpp">
+      <Filter>소스 파일\Mamager\Prototype</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +142,12 @@
     </ClInclude>
     <ClInclude Include="DataManager.h">
       <Filter>소스 파일\Mamager</Filter>
+    </ClInclude>
+    <ClInclude Include="Prototype.h">
+      <Filter>소스 파일\Mamager\Prototype</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>소스 파일\Mamager\ObjectPool</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

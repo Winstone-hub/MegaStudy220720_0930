@@ -9,9 +9,16 @@ Player::~Player()
 {
 }
 
+Object* Player::Initialize(const string& _key)
+{
+	// ** 초기화.
+	Key = _key;
+	return this;
+}
+
 void Player::Start()
 {
-
+	// ** 초기화.
 }
 
 void Player::Update()
@@ -27,7 +34,7 @@ void Player::Update()
 
 void Player::Render()
 {
-
+	cout << Key << endl;
 }
 
 void Player::Release()

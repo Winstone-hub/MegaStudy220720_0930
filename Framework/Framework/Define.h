@@ -11,6 +11,15 @@ inline void Safe_Release(T* _Obj)
 }
 
 
+
+#define ErrorMessage(str) {cout << "Error : where (" << __FILE__ << ")  line(" << str << ")" << endl;\
+	system("pause"); }
+
+
+
+
+
+
 // ** 16Áø¼ö
 const int KEYID_UP		= 0x00000001; // 1
 const int KEYID_DOWN	= 0x00000002; // 2
