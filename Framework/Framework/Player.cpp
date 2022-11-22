@@ -34,7 +34,7 @@ void Player::Update()
 
 void Player::Render()
 {
-	cout << Key << endl;
+	cout << Key << ": " << Index << endl;
 }
 
 void Player::Release()

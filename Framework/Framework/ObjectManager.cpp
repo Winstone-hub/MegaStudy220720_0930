@@ -22,7 +22,6 @@ void ObjectManager::Initialize()
 void ObjectManager::DisableFormEnable()
 {
 	auto iter = EnableList->find("Player");
-	//ErrorMessage(__LINE__);
 
 	//생성.
 	Object* pObj = ObjectPool::GetInstance()->Insert("Player");
@@ -30,6 +29,7 @@ void ObjectManager::DisableFormEnable()
 	if (pObj == nullptr)
 	{
 		// ** Error Message
+		//ErrorMessage(__LINE__);
 		return;
 	}
 
@@ -43,10 +43,32 @@ void ObjectManager::DisableFormEnable()
 		iter->second.push_back(pObj);
 }
 
+void ObjectManager::EnableFormDisable()
+{
+	// ** 테스트 코드 =======================================
+	auto pObj = EnableList->find("Player")->second.front();
+	// ** ===================================================
+
+	if (pObj == nullptr)
+		ErrorMessage(__LINE__);
+
+	ObjectPool::GetInstance()->Erase(pObj);
+}
+
 void ObjectManager::Render()
 {
 	for (auto iter = EnableList->begin(); iter != EnableList->end(); ++iter)
 	{
+		cout << " [ EnableList : " << iter->first << "] " << endl;
+		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); ++iter2)
+		{
+			(*iter2)->Render();
+		}
+	}
+
+	for (auto iter = DisableList->begin(); iter != DisableList->end(); ++iter)
+	{
+		cout << " [ DisableList : " << iter->first << "] " << endl;
 		for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); ++iter2)
 		{
 			(*iter2)->Render();

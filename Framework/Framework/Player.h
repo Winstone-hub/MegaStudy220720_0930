@@ -11,6 +11,7 @@ public:
 	virtual void Release()override;
 public:
 	virtual Object* Clone()override { return new Player(*this); }
+	
 public:
 	Player();
 	Player(const Transform& _Info) : Object(_Info) {}

@@ -1,6 +1,6 @@
 #include "Object.h"
 
-Object::Object() : Space(nullptr)
+Object::Object() : Space(nullptr), Index(0)
 {
 }
 

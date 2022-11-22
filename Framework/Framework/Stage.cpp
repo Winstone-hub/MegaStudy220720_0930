@@ -1,6 +1,7 @@
 #include "Stage.h"
 #include "SceneMamager.h"
 #include "ObjectManager.h"
+#include "InputManager.h"
 #include "Prototype.h"
 #include "Player.h"
 
@@ -17,7 +18,6 @@ void Stage::Start()
 	Prototype::GetInstance()->Initialize();
 	ObjectManager::GetInstance()->Initialize();
 
-	ObjectManager::GetInstance()->DisableFormEnable();
 	/*
 	try
 	{
@@ -62,18 +62,24 @@ void Stage::Start()
 		pPlayer->Start();
 	}
 	*/
-	Object* pObj = nullptr;
 }
 
 void Stage::Update()
 {
-	
 	//pPlayer->Update();	
 	/*
 	cout << "Stage" << endl;
 	if (GetAsyncKeyState('A'))
 		SceneMamager::GetInstance()->SetScene(SCENEID_EXIT);
 	*/
+
+	DWORD key = InputManager::GetInstance()->GetKey();
+
+	if (key & KEYID_ENTER)
+		ObjectManager::GetInstance()->DisableFormEnable();
+
+	if (key & KEYID_ESC)
+		ObjectManager::GetInstance()->EnableFormDisable();
 }
 
 void Stage::Render()

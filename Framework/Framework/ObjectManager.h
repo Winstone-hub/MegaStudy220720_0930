@@ -19,6 +19,7 @@ private:
 public:
 	void Initialize();
 	void DisableFormEnable();
+	void EnableFormDisable();
 	void Render();
 private:
 	ObjectManager();

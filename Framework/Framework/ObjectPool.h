@@ -16,6 +16,7 @@ public:
 private:
 	map<string, list<Object*>> EnableList;
 	map<string, list<Object*>> DisableList;
+	map<string, int> Counts;
 public:
 	map<string, list<Object*>>* GetEnableList() { return &EnableList; }
 	map<string, list<Object*>>* GetDisableList() { return &DisableList; } 
