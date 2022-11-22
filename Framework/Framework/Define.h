@@ -18,8 +18,6 @@ inline void Safe_Release(T* _Obj)
 
 
 
-
-
 // ** 16Áø¼ö
 const int KEYID_UP		= 0x00000001; // 1
 const int KEYID_DOWN	= 0x00000002; // 2

@@ -15,6 +15,8 @@ Stage::~Stage()
 void Stage::Start()
 {
 	Prototype::GetInstance()->Initialize();
+	ObjectManager::GetInstance()->Initialize();
+
 	ObjectManager::GetInstance()->DisableFormEnable();
 	/*
 	try
@@ -60,10 +62,12 @@ void Stage::Start()
 		pPlayer->Start();
 	}
 	*/
+	Object* pObj = nullptr;
 }
 
 void Stage::Update()
 {
+	
 	//pPlayer->Update();	
 	/*
 	cout << "Stage" << endl;

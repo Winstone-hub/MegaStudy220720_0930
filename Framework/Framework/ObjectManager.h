@@ -17,6 +17,7 @@ private:
 	map<string, list<Object*>>* EnableList;
 	map<string, list<Object*>>* DisableList;
 public:
+	void Initialize();
 	void DisableFormEnable();
 	void Render();
 private:

@@ -13,22 +13,31 @@ ObjectManager::~ObjectManager()
 }
 
 
+void ObjectManager::Initialize()
+{
+	EnableList = ObjectPool::GetInstance()->GetEnableList();
+	DisableList = ObjectPool::GetInstance()->GetDisableList();
+}
+
 void ObjectManager::DisableFormEnable()
 {
 	auto iter = EnableList->find("Player");
-	ErrorMessage(__LINE__);
+	//ErrorMessage(__LINE__);
 
 	//»ý¼º.
-	Object* pObj = ObjectPool::GetInstance()->Pop("Player");
+	Object* pObj = ObjectPool::GetInstance()->Insert("Player");
+
+	if (pObj == nullptr)
+	{
+		// ** Error Message
+		return;
+	}
 
 	if (iter == EnableList->end())
 	{
 		list<Object*> temp;
-		for (int i = 0; i < 5; ++i)
-		{
-			temp.push_back(pObj->Clone());
-			EnableList->insert(make_pair(pObj->GetKey(), temp));
-		}
+		temp.push_back(pObj->Clone());
+		EnableList->insert(make_pair(pObj->GetKey(), temp));
 	}
 	else
 		iter->second.push_back(pObj);

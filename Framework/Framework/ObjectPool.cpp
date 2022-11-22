@@ -16,40 +16,63 @@ ObjectPool::~ObjectPool()
 }
 
 
-void ObjectPool::CreateObject(string key)
+bool ObjectPool::CreateObject(string _key)
 {
+	// ** 汗荤 积己.
+	Object* ProtoObject = Prototype::GetInstance()->FindObject("Player");
 
+	if (ProtoObject != nullptr)
+	{
+		list<Object*> temp;
+		for (int i = 0; i < 5; ++i)
+		{
+			Object* pObj = ProtoObject->Clone();
+			pObj->SetSpace(&temp);
+			temp.push_back(pObj);
+			DisableList.insert(make_pair(_key, temp));
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
-Object* ObjectPool::Pop(string _key)
+list<Object*>* ObjectPool::FindObjectList(string _key)
 {
 	auto iter = DisableList.find(_key);
 
-	START:
 	if (iter == DisableList.end())
-	{
-		//积己.
-		Object* ProtoObject = Prototype::GetInstance()->FindObject("Player");
+		return nullptr;
 
-		if (ProtoObject != nullptr)
-		{
-			list<Object*> temp;
-			for (int i = 0; i < 5; ++i)
-			{
-				temp.push_back(ProtoObject->Clone());
-				DisableList.insert(make_pair(_key, temp));
-			}
+	return &iter->second;
+}
+
+Object* ObjectPool::Insert(string _key)
+{
+START:
+	auto iter = FindObjectList(_key);
+
+	if (iter == nullptr)
+	{
+		if(CreateObject(_key))
 			goto START;
-		}
-		else
-			return nullptr;
+
+		ErrorMessage(__LINE__);
+		return nullptr;
 	}
 	else
 	{
-		Object* pObj = iter->second.back();
-		iter->second.pop_back();
+		Object* pObj = iter->back();
+		iter->pop_back();
 		return pObj;
 	}
+}
+
+void ObjectPool::Erase(Object* _Obj)
+{
+	//auto iter = EnableList.find(_Obj->GetKey());
+
 }
 
 void ObjectPool::Release()
